@@ -4,14 +4,47 @@
     android:layout_height="match_parent"
     tools:context="${relativePackage}.${activityClass}" >
 
-    <TextView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@android:color/darker_gray"
-        android:text="call" 
-        android:gravity="center"
-        android:layout_centerInParent="true"
-        android:clickable="true"
-        android:onClick="onClickCall"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" 
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/darker_gray"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="onClickCall"
+            android:text="call" />
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/darker_gray"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="call beeper" 
+            android:onClick="onClickCallBeeper"/>
+        
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/darker_gray"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="call led" 
+            android:onClick="onClickCallLed"/>   
+              
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/darker_gray"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="call dev" 
+            android:onClick="onClickCallDeviceInfo"/>                    
+    </LinearLayout>
 
 </RelativeLayout>

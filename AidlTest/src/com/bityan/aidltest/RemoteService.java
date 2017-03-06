@@ -15,6 +15,12 @@ public class RemoteService extends Service {
 		@Override
 		public String saySomething(String s) throws RemoteException {
 			Log.i(tag, s);
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return getPackageName()+s;
 		}
 	};
