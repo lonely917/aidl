@@ -12,6 +12,7 @@ import com.aisino.t8.printer.Printer;
 import com.aisino.t8.printer.IPrinterCommand;
 import com.aisino.t8.printer.PaperSkipCommand;
 import com.aisino.t8.printer.PrinterConstant;
+import com.aisino.t8.serial.SerialControl;
 import com.zqprintersdk.PrinterConst.BitmapSize;
 import com.zqprintersdk.PrinterConst;
 import com.zqprintersdk.ZQPrinterSDK;
@@ -27,6 +28,7 @@ import android.util.Log;
 import cc.rengu.android.driver.device.AidlDeviceInfo;
 import cc.rengu.android.driver.device.AidlPrinter;
 import cc.rengu.android.driver.device.AidlPrinterListener;
+import cc.rengu.android.driver.device.AidlSerialComm;
 import cc.rengu.android.driver.device.Beeper;
 import cc.rengu.android.driver.device.Led;
 import cc.rengu.android.driver.service.engine.DeviceServiceEngine;
@@ -189,6 +191,48 @@ public class DeviceService extends Service {
 	};
 	
 	//serial binder
+	private final AidlSerialComm.Stub binderForSerial= new AidlSerialComm.Stub() {
+		
+		private SerialControl serialControl = new SerialControl();
+		
+		@Override
+		public int write(byte[] buf, int lengthMax, int timeoutSec)
+				throws RemoteException {
+			return serialControl.write(buf, lengthMax, timeoutSec);
+		}
+		
+		@Override
+		public int setconfig(int data1, int data2, byte[] buf)
+				throws RemoteException {
+			return serialControl.setconfig(data1, data2, buf);
+		}
+		
+		@Override
+		public int read(byte[] buf, int lengthMax, int timeoutSec)
+				throws RemoteException {
+			return serialControl.read(buf, lengthMax, timeoutSec);
+		}
+		
+		@Override
+		public int open() throws RemoteException {
+			return serialControl.open();
+		}
+		
+		@Override
+		public int ioctl(int cmd, byte[] args) throws RemoteException {
+			return serialControl.ioctl(cmd, args);
+		}
+		
+		@Override
+		public String getVersion() throws RemoteException {
+			return serialControl.getVersion();
+		}
+		
+		@Override
+		public int close() throws RemoteException {
+			return serialControl.close();
+		}
+	};
 	
 	private final DeviceServiceEngine.Stub binder = new DeviceServiceEngine.Stub() {
 
@@ -255,7 +299,7 @@ public class DeviceService extends Service {
 		@Override
 		public IBinder getSerialComm() throws RemoteException {
 			// TODO Auto-generated method stub
-			return null;
+			return binderForSerial;
 		}
 		
 	};
