@@ -5,10 +5,11 @@
     tools:context="${relativePackage}.${activityClass}" >
 
     <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" 
-        android:gravity="center">
+        android:layout_centerInParent="true"
+        android:gravity="center" >
 
         <TextView
             android:layout_width="50dp"
@@ -25,26 +26,79 @@
             android:background="@android:color/darker_gray"
             android:clickable="true"
             android:gravity="center"
-            android:text="call beeper" 
-            android:onClick="onClickCallBeeper"/>
-        
+            android:onClick="onClickCallBeeper"
+            android:text="call beeper" />
+
         <TextView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@android:color/darker_gray"
             android:clickable="true"
             android:gravity="center"
-            android:text="call led" 
-            android:onClick="onClickCallLed"/>   
-              
+            android:onClick="onClickCallLed"
+            android:text="call led" />
+
         <TextView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@android:color/darker_gray"
             android:clickable="true"
             android:gravity="center"
-            android:text="call dev" 
-            android:onClick="onClickCallDeviceInfo"/>                    
+            android:onClick="onClickCallDeviceInfo"
+            android:text="call dev" />
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/darker_gray"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="onClickTestPrinter"
+            android:text="call printer" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp" >
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/darker_gray"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="onClickPrintText"
+            android:text="print text" />
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/darker_gray"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="onClickPrintBar"
+            android:text="print bar" />
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/darker_gray"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="onClickPrintPic"
+            android:text="print pic" />
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/darker_gray"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="onClickPrintQr"
+            android:text="print qr" />
     </LinearLayout>
 
 </RelativeLayout>

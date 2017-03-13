@@ -21,9 +21,7 @@ public class AddQrCodeCommand implements IPrinterCommand {
 	
 	@Override
 	public int exec(ZQPrinterSDK prn) {
-		String alignString = bundle.getString("align", "left");
-		int alignment = Printer.getAlign(alignString);
-		prn.Prn_SetAlignment(alignment);
+		
 		return prn.Prn_PrintQRCode(QRCode.CHN, content);
 	}
 

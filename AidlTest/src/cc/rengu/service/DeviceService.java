@@ -1,18 +1,25 @@
 package cc.rengu.service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import com.aisino.t8.printer.AddBarCodeCommand;
 import com.aisino.t8.printer.AddPictureCommand;
 import com.aisino.t8.printer.AddQrCodeCommand;
 import com.aisino.t8.printer.AddTextCommand;
-import com.aisino.t8.printer.CommandRecorder;
+import com.aisino.t8.printer.Printer;
 import com.aisino.t8.printer.IPrinterCommand;
 import com.aisino.t8.printer.PaperSkipCommand;
+import com.aisino.t8.printer.PrinterConstant;
+import com.zqprintersdk.PrinterConst.BitmapSize;
+import com.zqprintersdk.PrinterConst;
+import com.zqprintersdk.ZQPrinterSDK;
 
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -115,51 +122,54 @@ public class DeviceService extends Service {
 		public void startPrinter(AidlPrinterListener listener)throws RemoteException {
 			
 			//开启线程进行打印工作..待完善..结果和提示补充
-			
-			int code = CommandRecorder.exec(getApplicationContext());
-			switch (code) {
-			case 0:
-				listener.onFinish();
-				break;
-			case 1:
-				listener.onError(1, "");
-				break;
-			default:
-				break;
+			Bundle bundle = Printer.exec(getApplicationContext());
+			if(listener!=null){
+				int code = bundle.getInt("code");
+				String msg = bundle.getString("string");
+				switch (code) {
+				case PrinterConstant.SUCCESS:
+					listener.onFinish();
+					break;
+				default:
+					listener.onError(code, msg);
+					break;
+				}
 			}
+
 		}
 		
 		@Override
 		public void paperSkip(int line) throws RemoteException {
-			CommandRecorder.addCommand(new PaperSkipCommand(line));
+			Printer.addCommand(new PaperSkipCommand(line), getApplicationContext());
 		}
 		
 		@Override
 		public String getStatus() throws RemoteException {
-			// TODO Auto-generated method stub
-			return null;
+			String statusString = Printer.getStatus(getApplicationContext());
+			return statusString;
 		}
 		
 		@Override
 		public void addText(Bundle format, String text) throws RemoteException {
-			CommandRecorder.addCommand(new AddTextCommand(format, text));
+			Printer.addCommand(new AddTextCommand(format, text), getApplicationContext());
 		}
 		
 		@Override
 		public void addQrCode(Bundle format, String qrCode) throws RemoteException {
-			CommandRecorder.addCommand(new AddQrCodeCommand(format, qrCode));
+			Printer.addCommand(new AddQrCodeCommand(format, qrCode), getApplicationContext());
 		}
 		
 		@Override
 		public void addPicture(Bundle format, Bitmap bitmap) throws RemoteException {
-			CommandRecorder.addCommand(new AddPictureCommand(format, bitmap));
+			Printer.addCommand(new AddPictureCommand(format, bitmap, getApplicationContext()), getApplicationContext());
 		}
 		
 		@Override
 		public void addBarCode(Bundle format, String barCode)throws RemoteException {
-			CommandRecorder.addCommand(new AddBarCodeCommand(format, barCode));
+			Printer.addCommand(new AddBarCodeCommand(format, barCode), getApplicationContext());
 		}
 	};
+	
 	//蜂鸣器 binder
 	private final Beeper.Stub binderForBeeper = new Beeper.Stub() {
 		
@@ -178,11 +188,13 @@ public class DeviceService extends Service {
 		}
 	};
 	
+	//serial binder
+	
 	private final DeviceServiceEngine.Stub binder = new DeviceServiceEngine.Stub() {
 
 		@Override
 		public IBinder getBeeper() throws RemoteException {
-			Log.d(tag, "getBeeper");
+			Log.i(tag, "getBeeper");
 			return binderForBeeper;
 		}
 
@@ -213,7 +225,7 @@ public class DeviceService extends Service {
 		@Override
 		public IBinder getPrinter() throws RemoteException {
 			// TODO Auto-generated method stub
-			return null;
+			return binderForPrinter;
 		}
 
 		@Override
