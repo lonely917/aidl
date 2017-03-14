@@ -13,7 +13,7 @@ public class SerialControl {
 	private int parity = 'N';//奇偶校验N E O S
 	private int flag = 0;//控制位标志 包含数据位、校验以及停止位
 	private int data2;//保留
-	private String path = "/dev/ttyS0";//默认设备，串口3
+	private String path = "dev/ttyS0";//默认设备，串口3
 	private byte[] flagByte = null;//控制位
 	private SerialPort serial = null;//串口类
 	
@@ -39,7 +39,10 @@ public class SerialControl {
 		flagByte = Arrays.copyOf(buf, buf.length);
 		{
 			//重新打开串口，jni没有提供单独设置波特率的函数,策略..修改波特率参数，重新打开串口
-			close();
+			if(serial!=null){
+				close();
+			}
+			
 			try {
 				open();
 			} catch (Exception e) {

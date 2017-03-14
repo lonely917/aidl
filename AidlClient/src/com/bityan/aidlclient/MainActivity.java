@@ -6,6 +6,7 @@ import java.io.InputStream;
 import cc.rengu.android.driver.device.AidlDeviceInfo;
 import cc.rengu.android.driver.device.AidlPrinter;
 import cc.rengu.android.driver.device.AidlPrinterListener;
+import cc.rengu.android.driver.device.AidlSerialComm;
 import cc.rengu.android.driver.device.Beeper;
 import cc.rengu.android.driver.device.Led;
 import cc.rengu.android.driver.service.engine.DeviceServiceEngine;
@@ -372,6 +373,40 @@ public class MainActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
+	}
+	
+	public void onClickOpenSerial(View v){
+		Log.i(tag,"onClickOpenSerial");
+		try {
+			AidlSerialComm serial = AidlSerialComm.Stub.asInterface(deviceServiceEngine.getSerialComm());
+			int ret = serial.open();
+			Log.i(tag, "serial open :"+ret);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	public void onClickCloseSerial(View v){
+		Log.i(tag,"onClickCloseSerial");
+		try {
+			AidlSerialComm serial = AidlSerialComm.Stub.asInterface(deviceServiceEngine.getSerialComm());
+			int ret = serial.close();
+			Log.i(tag, "serial close :"+ret);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	public void onClickSerialSend(View v){
+		Log.i(tag,"onClickSerialSend");
+		try {
+			AidlSerialComm serial = AidlSerialComm.Stub.asInterface(deviceServiceEngine.getSerialComm());
+			byte[] content = "aaaaa".getBytes();
+			int ret = serial.write(content, 20, 0);
+			Log.i(tag, "serial send :"+ret);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 	
 	private void printPic() {

@@ -99,6 +99,31 @@
             android:gravity="center"
             android:onClick="onClickPrintQr"
             android:text="print qr" />
+        
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/darker_gray"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="onClickOpenSerial"
+            android:text="openSerial" />        
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/darker_gray"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="onClickSerialSend"
+            android:text="sendSerial" />   
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/darker_gray"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="onClickCloseSerial"
+            android:text="closeSerial" />                            
     </LinearLayout>
 
 </RelativeLayout>
